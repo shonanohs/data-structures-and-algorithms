@@ -1,51 +1,48 @@
 package data_structures.arrays;
 
-public class DynamicArray {
+import java.util.Arrays;
+
+public class DynamicArray<T> {
     private int length;
-    private String[] data;
+    private T[] data;
     private int capacity;
 
     public DynamicArray() {
         length = 0; // number of items currently in the array
         capacity = 1; // how many items the array can hold
-        data = new String[capacity];
+        data = (T[]) new Object[capacity];
     }
 
-    public String get(int index) {
+    public T get(int index) {
         if (index < 0 || index >= length) {
             throw new IndexOutOfBoundsException("Index " + index + " out of bounds");
         }
         return data[index];
     }
 
-    public void push(String item) {
+    public void push(T item) {
         if (capacity == length) {
-            capacity *= 2; // Double capacity of array when full
-            String[] newData = new String[capacity];
-            for (int i = 0; i < length; i++) {
-                newData[i] = data[i];
-            }
-            data = newData;
+            capacity *= 2; // double capacity of array when full
+            data = Arrays.copyOf(data, capacity);
         }
-        data[length] = item;
-        length++;
+        data[length++] = item;
     }
 
-    public String pop() {
+    public T pop() {
         if (length == 0) {
             throw new IllegalStateException("Array is empty");
         }
-        String itemToPop = data[length - 1];
+        T itemToPop = data[length - 1];
         data[length - 1] = null;
         length--;
         return itemToPop;
     }
 
-    public String delete(int index) {
+    public T delete(int index) {
         if (index < 0 || index >= length) {
             throw new IndexOutOfBoundsException("Index " + index + " out of bounds");
         }
-        String itemToDelete = data[index];
+        T itemToDelete = data[index];
         shiftItems(index);
         return itemToDelete;
     }
@@ -72,7 +69,8 @@ public class DynamicArray {
     }
 
     public static void main(String[] args) {
-        DynamicArray dynamicArray = new DynamicArray();
+        // Dynamic Array of strings
+        DynamicArray<String> dynamicArray = new DynamicArray<>();
         dynamicArray.push("hello");
         dynamicArray.push("world");
         dynamicArray.push("!");
@@ -83,8 +81,21 @@ public class DynamicArray {
 
         dynamicArray.delete(1);
         System.out.println(dynamicArray); // [hello]
-
         System.out.println(dynamicArray.get(0)); // hello
+
+        // Dynamic Array of integers
+        DynamicArray<Integer> dynamicArrayInt = new DynamicArray<>();
+        dynamicArrayInt.push(1);
+        dynamicArrayInt.push(5);
+        dynamicArrayInt.push(3);
+        System.out.println(dynamicArrayInt); // [1, 5, 3]
+
+        dynamicArrayInt.pop();
+        System.out.println(dynamicArrayInt); // [1, 5]
+
+        dynamicArrayInt.delete(1);
+        System.out.println(dynamicArrayInt); // [1]
+        System.out.println(dynamicArrayInt.get(0)); // 1
     }
 }
 
