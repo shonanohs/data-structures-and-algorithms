@@ -1,6 +1,6 @@
 package data_structures.arrays;
 
-// Sample interview problem - create a function that reverses a string:
+// Create a function that reverses a string:
 // 'Hi, my name is Shona' should be:
 // 'anohS si eman ym, iH'
 public class ReverseString {
