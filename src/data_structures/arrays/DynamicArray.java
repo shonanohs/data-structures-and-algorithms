@@ -58,7 +58,7 @@ public class DynamicArray<T> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < length; i ++) {
+        for (int i = 0; i < length; i++) {
             sb.append(data[i]);
             if (i < length - 1) {
                 sb.append(", ");
