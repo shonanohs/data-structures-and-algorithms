@@ -85,11 +85,15 @@ public class DoublyLinkedList {
     }
 
     private DoublyLinkedNode getNodeAt(int index) {
-        DoublyLinkedNode currentNode = head;
-        for (int i = 0; i < index; i++) {
-            currentNode = currentNode.getNext();
+        if (index < length / 2) {
+            DoublyLinkedNode currentNode = head;
+            for (int i = 0; i < index; i++) currentNode = currentNode.getNext();
+            return currentNode;
+        } else {
+            DoublyLinkedNode currentNode = tail;
+            for (int i = length - 1; i > index; i--) currentNode = currentNode.getPrev();
+            return currentNode;
         }
-        return currentNode;
     }
 
     public int get(int index) {
