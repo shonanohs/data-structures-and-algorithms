@@ -69,6 +69,24 @@ public class SinglyLinkedList {
         length--;
     }
 
+    // Time complexity: O(n)
+    // Space complexity: O(1)
+    public void reverse() {
+        SinglyLinkedNode prevNode = null;
+        SinglyLinkedNode currentNode = head;
+        SinglyLinkedNode nextNode;
+        tail = head;
+
+        while (currentNode != null) {
+            nextNode = currentNode.getNext();
+            currentNode.setNext(prevNode);
+            prevNode = currentNode;
+            currentNode = nextNode;
+        }
+
+        head = prevNode;
+    }
+
     private SinglyLinkedNode getNodeAt(int index) {
         SinglyLinkedNode currentNode = head;
         for (int i = 0; i < index; i++) {
@@ -115,6 +133,8 @@ public class SinglyLinkedList {
         System.out.println(singlyLinkedList); // [50 -> 10 -> 20]
         System.out.println(singlyLinkedList.getLength()); // 3
         System.out.println(singlyLinkedList.get(1)); // 10
+        singlyLinkedList.reverse();
+        System.out.println(singlyLinkedList); // [20 -> 10 -> 50]
         System.out.println(singlyLinkedList.get(3)); // IndexOutOfBoundsException
     }
 }
