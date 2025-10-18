@@ -1,27 +1,37 @@
-package data_structures.linked_lists.singly;
+package data_structures.linked_lists;
+
+import data_structures.Node;
 
 public class SinglyLinkedList {
-    private SinglyLinkedNode head;
-    private SinglyLinkedNode tail;
+    private Node head;
+    private Node tail;
     private int length;
 
-    public SinglyLinkedList(int value) {
-        this.head = new SinglyLinkedNode(value);
-        this.tail = this.head;
-        this.length = 1;
+    public SinglyLinkedList() {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
     }
 
     public void append(int value) {
-        SinglyLinkedNode newNode = new SinglyLinkedNode(value);
-        tail.setNext(newNode);
-        tail = newNode;
+        Node newNode = new Node(value);
+        if (tail != null) {
+            tail.setNext(newNode);
+            tail = newNode;
+        } else {
+            head = tail = newNode;
+        }
         length++;
     }
 
     public void prepend(int value) {
-        SinglyLinkedNode newNode = new SinglyLinkedNode(value);
-        newNode.setNext(head);
-        head = newNode;
+        Node newNode = new Node(value);
+        if (head != null) {
+            newNode.setNext(head);
+            head = newNode;
+        } else {
+            head = tail = newNode;
+        }
         length++;
     }
 
@@ -38,9 +48,9 @@ public class SinglyLinkedList {
             throw new IndexOutOfBoundsException("Index " + index + " out of bounds for length " + length);
         }
 
-        SinglyLinkedNode previousNode = getNodeAt(index - 1);
-        SinglyLinkedNode nextNode = previousNode.getNext();
-        SinglyLinkedNode nodeToInsert = new SinglyLinkedNode(value);
+        Node previousNode = getNodeAt(index - 1);
+        Node nextNode = previousNode.getNext();
+        Node nodeToInsert = new Node(value);
 
         nodeToInsert.setNext(nextNode);
         previousNode.setNext(nodeToInsert);
@@ -59,8 +69,8 @@ public class SinglyLinkedList {
             return;
         }
 
-        SinglyLinkedNode previousNode = getNodeAt(index - 1);
-        SinglyLinkedNode nodeToRemove = previousNode.getNext();
+        Node previousNode = getNodeAt(index - 1);
+        Node nodeToRemove = previousNode.getNext();
 
         previousNode.setNext(nodeToRemove.getNext());
         if (index == length - 1) {
@@ -72,9 +82,9 @@ public class SinglyLinkedList {
     // Time complexity: O(n)
     // Space complexity: O(1)
     public void reverse() {
-        SinglyLinkedNode prevNode = null;
-        SinglyLinkedNode currentNode = head;
-        SinglyLinkedNode nextNode;
+        Node prevNode = null;
+        Node currentNode = head;
+        Node nextNode;
         tail = head;
 
         while (currentNode != null) {
@@ -87,8 +97,8 @@ public class SinglyLinkedList {
         head = prevNode;
     }
 
-    private SinglyLinkedNode getNodeAt(int index) {
-        SinglyLinkedNode currentNode = head;
+    private Node getNodeAt(int index) {
+        Node currentNode = head;
         for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNext();
         }
@@ -109,7 +119,7 @@ public class SinglyLinkedList {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        SinglyLinkedNode currentNode = head;
+        Node currentNode = head;
         while (currentNode != null) {
             sb.append(currentNode.getValue());
             if (currentNode.getNext() != null) {
@@ -122,7 +132,8 @@ public class SinglyLinkedList {
     }
 
     public static void main(String[] args) {
-        SinglyLinkedList singlyLinkedList = new SinglyLinkedList(10);
+        SinglyLinkedList singlyLinkedList = new SinglyLinkedList();
+        singlyLinkedList.append(10);
         singlyLinkedList.append(20);
         System.out.println(singlyLinkedList); // [10 -> 20]
         singlyLinkedList.prepend(30);
