@@ -67,10 +67,10 @@ public class StackLinkedList {
         stack.push(20);
         System.out.println(stack);
         stack.push(30);
-        System.out.println(stack); // [30 -> 20 -> 10]
+        System.out.println(stack); // (top) [30 -> 20 -> 10]
         System.out.println(stack.peek()); // 30
         System.out.println(stack.pop()); // 30
-        System.out.println(stack); // [20 -> 10]
+        System.out.println(stack); // (top) [20 -> 10]
         System.out.println(stack.getLength()); // 2
     }
 }

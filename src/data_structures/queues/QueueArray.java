@@ -49,13 +49,13 @@ public class QueueArray {
         queue.enqueue(10);
         System.out.println(queue); // [10]
         queue.enqueue(20);
-        System.out.println(queue); // [10 -> 20]
+        System.out.println(queue); // (front) [10 -> 20]
         queue.enqueue(30);
-        System.out.println(queue); // [10 -> 20 -> 30]
+        System.out.println(queue); // (front) [10 -> 20 -> 30]
 
         System.out.println(queue.peek()); // 10
         System.out.println(queue.dequeue()); // 10
-        System.out.println(queue); // [10 -> 20]
+        System.out.println(queue); // (front) [10 -> 20]
         queue.dequeue();
         queue.dequeue();
         queue.dequeue(); // NoSuchElementException

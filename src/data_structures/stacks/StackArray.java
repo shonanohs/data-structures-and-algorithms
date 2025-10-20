@@ -47,15 +47,15 @@ public class StackArray {
         StackArray stack = new StackArray();
         System.out.println(stack); // []
         stack.push(10);
-        System.out.println(stack); // [10]
+        System.out.println(stack); // [10] (top)
         stack.push(20);
-        System.out.println(stack); // [10 <- 20]
+        System.out.println(stack); // [10 <- 20] (top)
         stack.push(30);
-        System.out.println(stack); // [10 <- 20 <- 30]
+        System.out.println(stack); // [10 <- 20 <- 30] (top)
 
         System.out.println(stack.peek()); // 30
         System.out.println(stack.pop()); // 30
-        System.out.println(stack); // [10 <- 20]
+        System.out.println(stack); // [10 <- 20] (top)
         stack.pop();
         stack.pop();
         stack.pop(); // EmptyStackException
