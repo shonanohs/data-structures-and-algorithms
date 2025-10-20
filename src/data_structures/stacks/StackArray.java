@@ -39,7 +39,7 @@ public class StackArray {
             sb.append(integer).append(" <- ");
         }
         if (sb.length() > 2) sb.setLength(sb.length() - 4);
-        sb.append("]");
+        sb.append("] (top)");
         return sb.toString();
     }
 

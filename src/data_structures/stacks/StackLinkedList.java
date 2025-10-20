@@ -1,47 +1,43 @@
 package data_structures.stacks;
 
 import data_structures.Node;
+import java.util.EmptyStackException;
 
 public class StackLinkedList {
-    private Node head;
-    private Node tail;
+    private Node top;
     private int length;
 
     public StackLinkedList() {
-        this.head = null;
-        this.tail = null;
+        this.top = null;
         this.length = 0;
     }
 
     public void push(int value) {
         Node newNode = new Node(value);
-        if (tail != null) {
-            tail.setNext(newNode);
-            tail = newNode;
-        } else {
-            head = tail = newNode;
-        }
+        newNode.setNext(top);
+        top = newNode;
         length++;
     }
 
     public int pop() {
-        Node newTail = getNodeAt(length - 2);
-        newTail.setNext(null);
-        tail = newTail;
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        int value = top.getValue();
+        top = top.getNext();
         length--;
-        return tail.getValue();
+        return value;
     }
 
     public int peek() {
-        return getNodeAt(length - 1).getValue();
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return top.getValue();
     }
 
-    private Node getNodeAt(int index) {
-        Node currentNode = head;
-        for (int i = 0; i < index; i++) {
-            currentNode = currentNode.getNext();
-        }
-        return currentNode;
+    public boolean isEmpty() {
+        return length == 0;
     }
 
     public int getLength() {
@@ -50,12 +46,12 @@ public class StackLinkedList {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("[");
-        Node currentNode = head;
+        StringBuilder sb = new StringBuilder("(top) [");
+        Node currentNode = top;
         while (currentNode != null) {
             sb.append(currentNode.getValue());
             if (currentNode.getNext() != null) {
-                sb.append(" <- ");
+                sb.append(" -> ");
             }
             currentNode = currentNode.getNext();
         }
@@ -67,17 +63,14 @@ public class StackLinkedList {
         StackLinkedList stack = new StackLinkedList();
         System.out.println(stack); // []
         stack.push(10);
-        System.out.println(stack); // [10]
+        System.out.println(stack);
         stack.push(20);
-        System.out.println(stack); // [10 <- 20]
+        System.out.println(stack);
         stack.push(30);
-        System.out.println(stack); // [10 <- 20 <- 30]
-
+        System.out.println(stack); // [30 -> 20 -> 10]
         System.out.println(stack.peek()); // 30
         System.out.println(stack.pop()); // 30
-        System.out.println(stack); // [10 <- 20]
-        stack.pop();
-        stack.pop();
-        stack.pop(); // EmptyStackException
+        System.out.println(stack); // [20 -> 10]
+        System.out.println(stack.getLength()); // 2
     }
 }
