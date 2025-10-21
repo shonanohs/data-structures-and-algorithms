@@ -44,6 +44,42 @@ public class BinarySearchTree {
 
     public Node lookup(int value) { return lookupRec(root, value); }
 
+    private Node removeRec(Node current, int value) {
+        if (current == null) throw new NoSuchElementException();
+
+        if (value < current.getValue()) {
+            current.setPrev(removeRec(current.getPrev(), value));
+        } else if (value > current.getValue()) {
+            current.setNext(removeRec(current.getNext(), value));
+        } else {
+            // Case 1: no children
+            if (current.getPrev() == null && current.getNext() == null) return null;
+
+            // Case 2: only one child
+            if (current.getPrev() == null) return current.getNext();
+            if (current.getNext() == null) return current.getPrev();
+
+            // Case 3: two children
+            // Find in-order successor (smallest value in right subtree)
+            Node smallest = findMin(current.getNext());
+            current.setValue(smallest.getValue());
+            current.setNext(removeRec(current.getNext(), smallest.getValue()));
+        }
+
+        return current;
+    }
+
+    private Node findMin(Node node) {
+        while (node.getPrev() != null) {
+            node = node.getPrev();
+        }
+        return node;
+    }
+
+    public void remove(int value) {
+        root = removeRec(root, value);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -84,5 +120,26 @@ public class BinarySearchTree {
 
         */
         System.out.println(bst.lookup(20)); // Value: 20 Prev: 15 Next: 170
+        bst.remove(20);
+        System.out.println();
+        System.out.println(bst);
+        /*
+        │   ┌── 170
+        │   │   └── 15
+        └── 9
+            │   ┌── 6
+            └── 4
+                └── 1
+         */
+        bst.remove(15);
+        System.out.println();
+        System.out.println(bst);
+        /*
+        │   ┌── 170
+        └── 9
+            │   ┌── 6
+            └── 4
+                └── 1
+         */
     }
 }
