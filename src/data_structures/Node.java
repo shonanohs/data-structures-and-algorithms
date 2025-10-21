@@ -1,6 +1,6 @@
 package data_structures;
 
-// Common node object for use in LinkedList data structures
+/* Common node object for use in LinkedList/Tree data structures */
 public class Node {
     private Integer value;
     private Node next;
@@ -34,5 +34,14 @@ public class Node {
 
     public void setPrev(Node prev) {
         this.prev = prev;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Value: ").append(value.toString())
+        .append(" Prev: ").append(prev.getValue())
+        .append(" Next: ").append(next.getValue());
+        return sb.toString();
     }
 }
