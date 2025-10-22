@@ -5,13 +5,14 @@ package algorithms.recursion;
     One should use recursion, one should use a for loop.
 */
 public class Factorial {
+    // Both functions stop looping at 2 to avoid unnecessary additional loop to multiply by 1
     public static int factorialIterative(int number) {
         if (number < 0) {
             throw new IllegalArgumentException("Factorial is not defined for negative numbers");
         }
 
         int factorial = 1;
-        for (int i = number; i > 0; i--) {
+        for (int i = number; i > 1; i--) {
                 factorial = i * factorial;
         }
         return factorial;
@@ -21,7 +22,7 @@ public class Factorial {
         if (number < 0) {
             throw new IllegalArgumentException("Factorial is not defined for negative numbers");
         }
-        if (number == 0) {
+        if (number == 0 || number == 1) {
             return 1;
         }
         return factorialRecursive(number - 1) * number;
