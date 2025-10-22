@@ -5,19 +5,23 @@ package algorithms.recursion;
     One should use recursion, one should use a for loop.
 */
 public class Factorial {
-    // Both functions stop looping at 2 to avoid unnecessary additional loop to multiply by 1
+
+    // Time complexity: O(n)
+    // Space complexity: O(1)
     public static int factorialIterative(int number) {
         if (number < 0) {
             throw new IllegalArgumentException("Factorial is not defined for negative numbers");
         }
 
         int factorial = 1;
-        for (int i = number; i > 1; i--) {
+        for (int i = number; i > 1; i--) { // Stop looping at 2 to avoid unnecessary additional loop to multiply by 1
                 factorial = i * factorial;
         }
         return factorial;
     }
 
+    // Time complexity: O(n)
+    // Space complexity: O(n)
     public static int factorialRecursive(int number) {
         if (number < 0) {
             throw new IllegalArgumentException("Factorial is not defined for negative numbers");
