@@ -6,6 +6,8 @@ package algorithms.recursion;
     i.e. each value is the sum of the 2 previous values
  */
 public class Fibonacci {
+    // Time complexity: O(n)
+    // Space complexity: O(1)
     public static int fibonacciIterative(int index) {
         validateInput(index);
         if (index < 2) return index;
@@ -20,6 +22,8 @@ public class Fibonacci {
         return b;
     }
 
+    // Time complexity: O(2ⁿ)
+    // Space complexity: O(n)
     public static int fibonacciRecursive(int index) {
         validateInput(index);
         if (index < 2) return index;
