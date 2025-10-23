@@ -5,7 +5,7 @@ public class ReverseString {
         if (string.length() <= 1) {
             return string;
         }
-        return reverseString(string.substring(1, string.length())) + string.substring(0, 1);
+        return reverseString(string.substring(1)) + string.charAt(0);
     }
     public static void main(String[] args) {
         System.out.println(reverseString("hello")); // olleh
