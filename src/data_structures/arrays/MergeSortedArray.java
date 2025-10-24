@@ -39,6 +39,7 @@ public class MergeSortedArray {
         }
         return mergedArray;
     }
+
     public static void main(String[] args) {
         System.out.println(Arrays.toString(mergeSort(new int[]{0, 3, 4, 31}, new int[]{4, 6, 30}))); // [0, 3, 4, 4, 6, 30, 31]
     }
