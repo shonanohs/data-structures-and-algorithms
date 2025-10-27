@@ -5,23 +5,22 @@ public class MergeSort {
     // Time complexity: O(n log n)
     // Space complexity: O(n)
     public static int[] mergeSort(int[] array) {
+        if (array == null || array.length == 0) {
+            return new int[0];
+        }
         if (array.length == 1) {
             return array;
         }
 
-        double mid = (double) array.length / 2;
+        int mid = array.length / 2;
+        int[] left = new int[mid];
+        int[] right = new int[array.length - mid];
 
-        int[] left = new int[(int) Math.floor(mid)];
-        int[] right = new int[(int) Math.ceil(mid)];
-
-        for (int i = 0; i < array.length / 2; i++) {
+        for (int i = 0; i < mid; i++) {
             left[i] = array[i];
         }
-
-        int j = 0;
-        for (int i = array.length / 2; i < array.length; i++) {
-            right[j] = array[i];
-            j++;
+        for (int i = mid; i < array.length; i++) {
+            right[i - mid] = array[i];
         }
 
         return merge(mergeSort(left), mergeSort(right));
@@ -47,16 +46,12 @@ public class MergeSort {
 
         // Add remaining elements, if any (when array lengths differ)
         while (i < array1.length) {
-            mergedArray[k] = array1[i];
-            i++;
-            k++;
+            mergedArray[k++] = array1[i++];
+        }
+        while (j < array2.length) {
+            mergedArray[k++] = array2[j++];
         }
 
-        while (j < array2.length) {
-            mergedArray[k] = array2[j];
-            j++;
-            k++;
-        }
         return mergedArray;
     }
 

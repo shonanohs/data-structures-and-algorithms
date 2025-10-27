@@ -5,14 +5,15 @@ public class InsertionSort {
     // Time complexity: O(n²)
     // Space complexity: O(1)
     public static int[] insertionSort(int[] array) {
-        for (int i = 1; i <= array.length; i++) {
-            for (int j = i - 1; j > 0; j--) {
-                int val1 = array[j];
-                int val2 = array[j - 1];
-
-                if (val1 < val2) {
+        if (array == null || array.length < 2) {
+            return array;
+        }
+        for (int i = 1; i < array.length; i++) {
+            for (int j = i; j > 0; j--) {
+                if (array[j] < array[j - 1]) {
+                    int temp = array[j];
                     array[j] = array[j - 1];
-                    array[j - 1] = val1;
+                    array[j - 1] = temp;
                 }
             }
         }

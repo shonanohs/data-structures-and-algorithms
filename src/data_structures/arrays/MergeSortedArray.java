@@ -27,16 +27,12 @@ public class MergeSortedArray {
 
         // Add remaining elements, if any (when array lengths differ)
         while (i < array1.length) {
-            mergedArray[k] = array1[i];
-            i++;
-            k++;
+            mergedArray[k++] = array1[i++];
+        }
+        while (j < array2.length) {
+            mergedArray[k++] = array2[j++];
         }
 
-        while (j < array2.length) {
-            mergedArray[k] = array2[j];
-            j++;
-            k++;
-        }
         return mergedArray;
     }
 
