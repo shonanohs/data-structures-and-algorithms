@@ -10,21 +10,23 @@ public class MergeSort {
         if (array == null || array.length == 0) {
             return new int[0];
         }
-        if (array.length == 1) {
+        if (array.length == 1) { // Base case: array of size 1 is already sorted
             return array;
         }
 
+        // 1. Divide: split array into two halves
         int mid = array.length / 2;
         int[] left = new int[mid];
         int[] right = new int[array.length - mid];
 
+        // Copy elements into the two new subarrays
         for (int i = 0; i < mid; i++) {
             left[i] = array[i];
         }
         for (int i = mid; i < array.length; i++) {
             right[i - mid] = array[i];
         }
-
+        // 2. Conquer: recursively sort the halves, then merge the results
         return merge(mergeSort(left), mergeSort(right));
     }
 
@@ -35,6 +37,7 @@ public class MergeSort {
 
         int[] mergedArray = new int[array1.length + array2.length];
 
+        // Compare elements from both arrays and add the smallest one to the merged array
         while (i < array1.length && j < array2.length) {
             if (array1[i] <= array2[j]) {
                 mergedArray[k] = array1[i];

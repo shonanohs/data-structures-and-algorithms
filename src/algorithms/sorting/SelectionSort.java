@@ -10,14 +10,14 @@ public class SelectionSort {
         if (array == null || array.length < 2) {
             return array;
         }
-        for (int i = 0; i < array.length - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < array.length; j++) {
+        for (int i = 0; i < array.length - 1; i++) { // Marks boundary between sorted and unsorted elements
+            int minIndex = i; // Assume the element at the start of the unsorted section (i) is the smallest
+            for (int j = i + 1; j < array.length; j++) { // Scan entire remaining unsorted position to find true smallest element
                 if (array[j] < array[minIndex]) {
                     minIndex = j;
                 }
             }
-            int temp = array[minIndex];
+            int temp = array[minIndex]; // Exchange minimum element with current boundary element
             array[minIndex] = array[i];
             array[i] = temp;
         }
