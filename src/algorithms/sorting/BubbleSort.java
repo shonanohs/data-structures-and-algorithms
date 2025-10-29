@@ -1,5 +1,7 @@
 package algorithms.sorting;
 
+import static algorithms.ArrayUtils.printArray;
+
 public class BubbleSort {
 
     // Time complexity: O(n²)
@@ -7,11 +9,13 @@ public class BubbleSort {
     public static int[] bubbleSort(int[] array) {
         if (array == null) return new int[0];
         int length = array.length;
-        boolean swapped;
+        boolean swapped; // Flag to track if any swaps occurred in the inner loop
 
+        // In each pass, the largest unsorted element "bubbles up" to its correct position
         for (int i = 0; i < length - 1; i++) {
             swapped = false;
-            for (int j = 0; j < length - 1 - i; j++) {
+            for (int j = 0; j < length - 1 - i; j++) { // Performs the adjacent comparisons and swaps
+                // across the unsorted portion of the array
                 if (array[j] > array[j + 1]) {
                     int temp = array[j];
                     array[j] = array[j + 1];
@@ -19,23 +23,12 @@ public class BubbleSort {
                     swapped = true;
                 }
             }
+            // If no two elements were swapped by inner loop, the array is already sorted and we can stop early
             if (!swapped) {
                 break;
             }
         }
         return array;
-    }
-
-    public static void printArray(int[] array) {
-        StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < array.length; i++) {
-            sb.append(array[i]);
-            if (i < array.length - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append("]");
-        System.out.println(sb);
     }
 
     public static void main(String[] args) {
