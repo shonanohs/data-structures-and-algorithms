@@ -2,6 +2,8 @@ package algorithms.sorting;
 
 public class QuickSort {
 
+    // Time complexity: O(n log n)
+    // Space complexity: O(log n)
     public static void quickSort(int[] array, int low, int high) {
         if (low < high) { // Base case: stop recursion if array has 0 or 1 element(s)
             // 1. Divide: partition array & get pivot index
