@@ -11,6 +11,8 @@ public class BinarySearchTree {
         this.root = null;
     }
 
+    public enum DFS { INORDER, PREORDER, POSTORDER }
+
     private Node insertRec(Node current, int value) {
         if (current == null) return new Node(value);
         // Traverse tree to left (prev) or right (next) of current node until a
@@ -79,7 +81,7 @@ public class BinarySearchTree {
         root = removeRec(root, value);
     }
 
-    public List<Integer> breadthFirstSearch() {
+    private List<Integer> breadthFirstSearch() {
         if (root == null) return new ArrayList<>();
         Node currentNode = root;
         ArrayList<Integer> list = new ArrayList<>();
@@ -117,6 +119,53 @@ public class BinarySearchTree {
         if (currentNode.getRight() != null) queue.add(currentNode.getRight());
 
         return breadthFirstSearchRec(queue, list);
+    }
+
+    /*
+        Wrapper method to create list/pass in root node for DFS recursive call
+        according to desired type
+     */
+    public List<Integer> depthFirstSearch(DFS type) {
+        if (root == null) return new ArrayList<>();
+        return switch (type) {
+            case INORDER -> depthFirstSearchInOrder(root, new ArrayList<>());
+            case POSTORDER -> depthFirstSearchPostOrder(root, new ArrayList<>());
+            case PREORDER -> depthFirstSearchPreOrder(root, new ArrayList<>());
+            default -> null;
+        };
+    }
+
+    private List<Integer> depthFirstSearchInOrder(Node node, List<Integer> list) {
+        if (node.getLeft() != null) {
+            depthFirstSearchInOrder(node.getLeft(), list);
+        }
+        list.add(node.getValue());
+        if (node.getRight() != null) {
+            depthFirstSearchInOrder(node.getRight(), list);
+        }
+        return list;
+    }
+
+    private List<Integer> depthFirstSearchPostOrder(Node node, List<Integer> list) {
+        if (node.getLeft() != null) {
+            depthFirstSearchPostOrder(node.getLeft(), list);
+        }
+        if (node.getRight() != null) {
+            depthFirstSearchPostOrder(node.getRight(), list);
+        }
+        list.add(node.getValue());
+        return list;
+    }
+
+    private List<Integer> depthFirstSearchPreOrder(Node node, List<Integer> list) {
+        list.add(node.getValue());
+        if (node.getLeft() != null) {
+            depthFirstSearchPreOrder(node.getLeft(), list);
+        }
+        if (node.getRight() != null) {
+            depthFirstSearchPreOrder(node.getRight(), list);
+        }
+        return list;
     }
 
     @Override
@@ -181,7 +230,12 @@ public class BinarySearchTree {
                 └── 1
          */
 
+        // Breadth-First Search
         System.out.println(bst.breadthFirstSearch()); // [9, 4, 170, 1, 6]
         System.out.println(bst.breadthFirstSearchRec()); // [9, 4, 170, 1, 6]
+        // Depth-First Search
+        System.out.println(bst.depthFirstSearch(DFS.INORDER)); // [1, 4, 6, 9, 170]
+        System.out.println(bst.depthFirstSearch(DFS.PREORDER)); // [9, 4, 1, 6, 170]
+        System.out.println(bst.depthFirstSearch(DFS.POSTORDER)); // [1, 6, 4, 170, 9]
     }
 }
