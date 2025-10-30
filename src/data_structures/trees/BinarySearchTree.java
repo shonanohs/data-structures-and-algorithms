@@ -2,7 +2,7 @@ package data_structures.trees;
 
 import data_structures.Node;
 
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class BinarySearchTree {
     private Node root;
@@ -80,6 +80,49 @@ public class BinarySearchTree {
         root = removeRec(root, value);
     }
 
+    public List<Integer> breadthFirstSearch() {
+        Node currentNode = root;
+        ArrayList<Integer> list = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+
+        queue.add(currentNode);
+
+        while (!queue.isEmpty()) {
+            currentNode = queue.peek();
+            queue.remove();
+            list.add(currentNode.getValue());
+            if (currentNode.getPrev() != null) {
+                queue.add(currentNode.getPrev());
+            }
+            if (currentNode.getNext() != null) {
+                queue.add(currentNode.getNext());
+            }
+        }
+        return list;
+    }
+
+    public List<Integer> breadthFirstSearchRec(Queue<Node> queue, List<Integer> list) {
+        if (queue.isEmpty()) {
+            return list;
+        }
+
+        Node currentNode = queue.peek();
+        queue.remove();
+        list.add(currentNode.getValue());
+        if (currentNode.getPrev() != null) {
+            queue.add(currentNode.getPrev());
+        }
+        if (currentNode.getNext() != null) {
+            queue.add(currentNode.getNext());
+        }
+
+        return breadthFirstSearchRec(queue, list);
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -141,5 +184,11 @@ public class BinarySearchTree {
             └── 4
                 └── 1
          */
+
+        System.out.println(bst.breadthFirstSearch()); // [9, 4, 170, 1, 6]
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(bst.getRoot());
+        System.out.println(bst.breadthFirstSearchRec(queue, new ArrayList<>())); // [9, 4, 170, 1, 6]
     }
 }
