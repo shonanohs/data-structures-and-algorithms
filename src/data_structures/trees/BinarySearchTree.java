@@ -16,10 +16,10 @@ public class BinarySearchTree {
         // Traverse tree to left (prev) or right (next) of current node until a
         // 'null' node/empty space is found to insert into
         if (value < current.getValue()) {
-            current.setPrev(insertRec(current.getPrev(), value));
+            current.setPrev(insertRec(current.getLeft(), value));
         }
         else {
-            current.setNext(insertRec(current.getNext(), value));
+            current.setNext(insertRec(current.getRight(), value));
         }
         return current;
     }
@@ -29,49 +29,48 @@ public class BinarySearchTree {
     }
 
     private Node lookupRec(Node current, int value) {
-        if (current == null) throw new NoSuchElementException();
+        if (current == null) return null;
         if (value == current.getValue()) return current;
         // Traverse tree to left (prev) or right (next) of current node until
         // its value matches the input value
         if (value < current.getValue()) {
-            current = lookupRec(current.getPrev(), value);
+            return lookupRec(current.getLeft(), value);
         }
         else {
-            current = lookupRec(current.getNext(), value);
+            return lookupRec(current.getRight(), value);
         }
-        return current;
     }
 
     public Node lookup(int value) { return lookupRec(root, value); }
 
     private Node removeRec(Node current, int value) {
-        if (current == null) throw new NoSuchElementException();
+        if (current == null) return null;
 
         if (value < current.getValue()) {
-            current.setPrev(removeRec(current.getPrev(), value));
+            current.setPrev(removeRec(current.getLeft(), value));
         } else if (value > current.getValue()) {
-            current.setNext(removeRec(current.getNext(), value));
+            current.setNext(removeRec(current.getRight(), value));
         } else {
             // Case 1: no children
-            if (current.getPrev() == null && current.getNext() == null) return null;
+            if (current.getLeft() == null && current.getRight() == null) return null;
 
             // Case 2: only one child
-            if (current.getPrev() == null) return current.getNext();
-            if (current.getNext() == null) return current.getPrev();
+            if (current.getLeft() == null) return current.getRight();
+            if (current.getRight() == null) return current.getLeft();
 
             // Case 3: two children
             // Find in-order successor (smallest value in right subtree)
-            Node smallest = findMin(current.getNext());
+            Node smallest = findMin(current.getRight());
             current.setValue(smallest.getValue());
-            current.setNext(removeRec(current.getNext(), smallest.getValue()));
+            current.setNext(removeRec(current.getRight(), smallest.getValue()));
         }
 
         return current;
     }
 
     private Node findMin(Node node) {
-        while (node.getPrev() != null) {
-            node = node.getPrev();
+        while (node.getLeft() != null) {
+            node = node.getLeft();
         }
         return node;
     }
@@ -81,6 +80,7 @@ public class BinarySearchTree {
     }
 
     public List<Integer> breadthFirstSearch() {
+        if (root == null) return new ArrayList<>();
         Node currentNode = root;
         ArrayList<Integer> list = new ArrayList<>();
         Queue<Node> queue = new LinkedList<>();
@@ -88,39 +88,35 @@ public class BinarySearchTree {
         queue.add(currentNode);
 
         while (!queue.isEmpty()) {
-            currentNode = queue.peek();
-            queue.remove();
+            currentNode = queue.remove();
             list.add(currentNode.getValue());
-            if (currentNode.getPrev() != null) {
-                queue.add(currentNode.getPrev());
-            }
-            if (currentNode.getNext() != null) {
-                queue.add(currentNode.getNext());
-            }
+
+            if (currentNode.getLeft() != null) queue.add(currentNode.getLeft());
+            if (currentNode.getRight() != null) queue.add(currentNode.getRight());
         }
         return list;
     }
 
-    public List<Integer> breadthFirstSearchRec(Queue<Node> queue, List<Integer> list) {
-        if (queue.isEmpty()) {
-            return list;
-        }
-
-        Node currentNode = queue.peek();
-        queue.remove();
-        list.add(currentNode.getValue());
-        if (currentNode.getPrev() != null) {
-            queue.add(currentNode.getPrev());
-        }
-        if (currentNode.getNext() != null) {
-            queue.add(currentNode.getNext());
-        }
-
-        return breadthFirstSearchRec(queue, list);
+    /*
+        Wrapper method to create queue/list for BFS recursive call
+     */
+    public List<Integer> breadthFirstSearchRec() {
+        if (root == null) return new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        return breadthFirstSearchRec(queue, new ArrayList<>());
     }
 
-    public Node getRoot() {
-        return root;
+    public List<Integer> breadthFirstSearchRec(Queue<Node> queue, List<Integer> list) {
+        if (queue.isEmpty()) return list;
+
+        Node currentNode = queue.remove();
+        list.add(currentNode.getValue());
+
+        if (currentNode.getLeft() != null) queue.add(currentNode.getLeft());
+        if (currentNode.getRight() != null) queue.add(currentNode.getRight());
+
+        return breadthFirstSearchRec(queue, list);
     }
 
     @Override
@@ -132,12 +128,12 @@ public class BinarySearchTree {
 
     private void printTree(Node node, StringBuilder sb, String prefix, boolean isTail) {
         if (node == null) return;
-        if (node.getNext() != null) {
-            printTree(node.getNext(), sb, prefix + (isTail ? "│   " : "    "), false);
+        if (node.getRight() != null) {
+            printTree(node.getRight(), sb, prefix + (isTail ? "│   " : "    "), false);
         }
         sb.append(prefix).append(isTail ? "└── " : "┌── ").append(node.getValue()).append("\n");
-        if (node.getPrev() != null) {
-            printTree(node.getPrev(), sb, prefix + (isTail ? "    " : "│   "), true);
+        if (node.getLeft() != null) {
+            printTree(node.getLeft(), sb, prefix + (isTail ? "    " : "│   "), true);
         }
     }
 
@@ -186,9 +182,6 @@ public class BinarySearchTree {
          */
 
         System.out.println(bst.breadthFirstSearch()); // [9, 4, 170, 1, 6]
-
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(bst.getRoot());
-        System.out.println(bst.breadthFirstSearchRec(queue, new ArrayList<>())); // [9, 4, 170, 1, 6]
+        System.out.println(bst.breadthFirstSearchRec()); // [9, 4, 170, 1, 6]
     }
 }

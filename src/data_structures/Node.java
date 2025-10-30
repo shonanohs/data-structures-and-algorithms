@@ -36,6 +36,10 @@ public class Node {
         this.prev = prev;
     }
 
+    public Node getLeft() { return this.prev; }
+
+    public Node getRight() { return this.next; }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
