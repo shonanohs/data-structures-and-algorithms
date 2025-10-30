@@ -131,7 +131,6 @@ public class BinarySearchTree {
             case INORDER -> depthFirstSearchInOrder(root, new ArrayList<>());
             case POSTORDER -> depthFirstSearchPostOrder(root, new ArrayList<>());
             case PREORDER -> depthFirstSearchPreOrder(root, new ArrayList<>());
-            default -> null;
         };
     }
 
